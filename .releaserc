@@ -1,0 +1,23 @@
+{
+  'repositoryUrl': 'https://github.com/barundel/terraform-aws-organizations',
+  'tagFormat': 'v${version}',
+  'branch': 'master',
+  'plugins': [
+    '@semantic-release/commit-analyzer',
+    [
+    '@semantic-release/release-notes-generator',{
+      "preset": "angular",
+      "releaseRules": [
+        {"type": "refactor", "release": true},
+        {"type": "docs", "release": true},
+        {"type": "tests", "release": true}
+      ]
+    }],
+    [
+      '@semantic-release/changelog', {
+        'changelogTitle': 'All notable changes to this terraform will be documented in this file.'
+      }
+    ],
+    '@semantic-release/git',
+  ]
+}
