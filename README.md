@@ -1,12 +1,6 @@
-# terraform-aws-organizations-
-Collection of terraform resources for aws organizations.
-
-# terraform-gitlab-modules
- 
-
 # terraform-aws-organizations [![Build Status](https://github.com/barundel/terraform-aws-organizations/workflows/build/badge.svg)](https://github.com/barundel/terraform-aws-organizations/actions)
 
-> **A Terraform module for creating GitLab resources.**
+> **A Terraform module for creating AWS Organization resources like organizational units and service control policies.**
 
 ## Table of Contents
 
