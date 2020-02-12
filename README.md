@@ -136,6 +136,10 @@ module "attach_policy" {
 | account\_email | The email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account. | `string` | `""` | no |
 | account\_name | A friendly name for the member account. | `string` | `""` | no |
 | account\_parent\_id | Parent Organizational Unit ID or Root ID for the account. Defaults to the Organization default Root ID. A configuration must be present for this argument to perform drift detection. | `string` | `""` | no |
+| aws\_service\_access\_principles | List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must have feature\_set set to ALL. For additional information, see the [AWS Organizations User Guide.](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html). | `list` | `[]` | no |
+| create\_organization | Tue or false on if to create an organizzation, defaults to false | `bool` | `false` | no |
+| enable\_policy\_types | List of Organizations policy types to enable in the Organization Root. Organization must have feature\_set set to ALL. For additional information about valid policy types (e.g. SERVICE\_CONTROL\_POLICY and TAG\_POLICY), see the [AWS Organizations API Reference.](https://docs.aws.amazon.com/organizations/latest/APIReference/API_EnablePolicyType.html) | `list` | `[]` | no |
+| feature\_Set | Specify ALL (default) or CONSOLIDATED\_BILLING | `string` | `"ALL"` | no |
 | iam\_user\_access\_to\_billing | If set to ALLOW, the new account enables IAM users to access account billing information if they have the required permissions. If set to DENY, then only the root user of the new account can access account billing information. | `string` | `"DENY"` | no |
 | ou\_name | The name for the organizational unit | `string` | `""` | no |
 | ou\_parent\_id | ID of the parent organizational unit, which may be the root | `string` | `""` | no |
@@ -146,18 +150,26 @@ module "attach_policy" {
 | policy\_type | The type of policy to create. Currently, the only valid values are SERVICE\_CONTROL\_POLICY (SCP) and TAG\_POLICY. Defaults to SERVICE\_CONTROL\_POLICY | `string` | `"SERVICE_CONTROL_POLICY"` | no |
 | role\_name | n/a | `string` | `"The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the master account, allowing users in the master account to assume the role, as permitted by the master account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore_changes is used."` | no |
 | tags | Map of tags to assign to the reqsource. | `map` | `{}` | no |
-| target\_id | The unique identifier (ID) of the root, organizational unit, or account number that you want to attach the policy to | `string` | `""` | no |
+| target\_id | The unique identifier (ID) of the root, organizational unit, or account number that you want to attach the policy to | `list` | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| account\_arn | n/a |
-| account\_id | n/a |
+| account\_arn | ARN of the organization account |
+| account\_id | Identifier of the organization account |
+| master\_account\_arn | ARN of the master account |
+| master\_account\_email | Email of the master account |
+| master\_account\_id | ID of the master account |
+| non\_master\_accounts | List of organization accounts excluding the master account |
+| org\_accounts | List of organization accounts including the master account |
+| org\_arn | ARN of the organization |
+| org\_id | ID of the organization |
 | ou\_arn | ARN of the organizational unit |
 | ou\_id | Identifier of the organization unit |
-| policy\_arn | n/a |
-| policy\_id | n/a |
+| policy\_arn | ARN of the organization policy |
+| policy\_id | Identifier of the organization policy |
+| roots | List of organization roots |
 <!--- END_TF_DOCS --->
 
 ## License
