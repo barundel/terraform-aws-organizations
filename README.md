@@ -73,7 +73,7 @@ CONTENT
 }
 ````
 
-#### General Examples
+#### Other Examples
 ````
 module "org" {
   source = "github.com/barundel/terraform-aws-organizations"
