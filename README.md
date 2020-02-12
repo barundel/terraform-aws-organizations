@@ -10,37 +10,94 @@
 
 ## Maintenance
 
-This project is maintained [Ben](https://github.com/barundel), anyone is welcome to contribute. 
+This project is maintained [Ben](https://github.com/barundel), anyone is welcome to contribute with fixes or new features. 
 
 ## Getting Started
 
-`count = length(var.resource_path_part) > 0 ? 1 : 0` Controls if to create new methods, need to detail this.
+#### Organization Example
 
-#### Example
+The following example creates an organisation within your AWS account. 
+````
+module "the_organization" {
+  source = "github.com/barundel/terraform-aws-organizations"
+
+  create_organization = true
+
+  aws_service_access_principles = [
+    "tagpolicies.tag.amazonaws.com"
+  ]
+
+  feature_Set = "ALL"
+
+  enable_policy_types = [
+    "SERVICE_CONTROL_POLICY",
+    "TAG_POLICY"
+  ]
+
+}
+````
+
+#### Organization Example
+
+This example creates a tagging policy and assigns it to multiple targets. 
+````
+module "tagging_rules_1" {
+  source = "github.com/barundel/terraform-aws-organizations"
+
+  policy_name = "tagging-rules"
+  policy_description = "Testing tagging policy"
+
+  policy_type = "TAG_POLICY"
+
+  policy_content = <<CONTENT
+{
+    "tags": {
+        "CostCenter": {
+            "tag_key": {
+                "@@assign": "CostCenter",
+                "@@operators_allowed_for_child_policies": ["@@none"]
+            }
+        },
+        "Project": {
+            "tag_key": {
+                "@@assign": "Project",
+                "@@operators_allowed_for_child_policies": ["@@none"]
+            }
+        }
+    }
+}
+CONTENT
+
+  target_id = ["r-dgk7", module.development_ou.ou_id]
+
+}
+````
+
+#### General Examples
 ````
 module "org" {
-  source = "../../tf-modules/terraform-aws-organizations"
+  source = "github.com/barundel/terraform-aws-organizations"
 
   ou_name = "ou_2"
   ou_parent_id = "r-0000"
 }
 
 module "org_2" {
-  source = "../../tf-modules/terraform-aws-organizations"
+  source = "github.com/barundel/terraform-aws-organizations"
 
   ou_name = "ou_2"
   ou_parent_id = "ou-0000000000"
 }
 
 module "org_3" {
-  source = "../../tf-modules/terraform-aws-organizations"
+  source = "github.com/barundel/terraform-aws-organizations"
 
   ou_name = "ou_2"
   ou_parent_id = module.org_2.ou_id
 }
 
 module "scp_1" {
-  source = "../../tf-modules/terraform-aws-organizations"
+  source = "github.com/barundel/terraform-aws-organizations"
 
   policy_name = "scp_policy_all"
   policy_description = "A description of the policy"
@@ -58,7 +115,7 @@ module "scp_1" {
 }
 
 module "attach_policy" {
-  source = "../../tf-modules/terraform-aws-organizations"
+  source = "github.com/barundel/terraform-aws-organizations"
 
   policy_id = module.scp_1.policy_id
   target_id = module.org_3.ou_id

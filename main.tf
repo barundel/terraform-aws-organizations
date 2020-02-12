@@ -1,3 +1,15 @@
+locals {
+  policy_id = coalescelist(aws_organizations_policy.policy.*.id, [var.policy_id])
+}
+
+resource "aws_organizations_organization" "org" {
+  count = var.create_organization ? 1 : 0
+
+  aws_service_access_principals = var.aws_service_access_principles
+  enabled_policy_types = var.enable_policy_types
+  feature_set = var.feature_Set
+}
+
 resource "aws_organizations_organizational_unit" "ou" {
   count = length(var.ou_name) > 0 ? 1 : 0
 
@@ -30,9 +42,9 @@ resource "aws_organizations_policy" "policy" {
 }
 
 resource "aws_organizations_policy_attachment" "policy_attachment" {
-  count = length(var.target_id) > 0 ? 1 : 0
+  count = length(var.target_id) > 0 ? length(var.target_id) : 0
 
-  policy_id = var.policy_id
-  target_id = var.target_id
+  policy_id = local.policy_id[0]
+  target_id = var.target_id[count.index]
 }
 
