@@ -1,7 +1,7 @@
 // ORG Variables
 variable "create_organization" {
   default = false
-  description = "Tue or false on if to create an organizzation, defaults to false"
+  description = "Tue or false on if to create an organization, defaults to false"
 }
 
 variable "feature_Set" {
@@ -52,7 +52,8 @@ variable "account_parent_id" {
 }
 
 variable "role_name" {
-  default = "The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the master account, allowing users in the master account to assume the role, as permitted by the master account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore_changes is used."
+  default = ""
+  description = "The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the master account, allowing users in the master account to assume the role, as permitted by the master account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore_changes is used."
 }
 
 variable "tags" {
