@@ -1,5 +1,13 @@
 All notable changes to this terraform will be documented in this file.
 
+## [1.1.1](https://github.com/barundel/terraform-aws-organizations/compare/v1.1.0...v1.1.1) (2020-03-03)
+
+
+### Bug Fixes
+
+* correcting issue with target_id to list ([ec12024](https://github.com/barundel/terraform-aws-organizations/commit/ec12024f7faa6d9d33429ca7e78098a9f6e7c324))
+* correcting some typos in the variables ([1aad3f6](https://github.com/barundel/terraform-aws-organizations/commit/1aad3f63286ef4dccf7eb9d4bcb6ed2c8bea4470))
+
 # [1.1.0](https://github.com/barundel/terraform-aws-organizations/compare/v1.0.0...v1.1.0) (2020-02-12)
 
 
