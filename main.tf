@@ -45,6 +45,6 @@ resource "aws_organizations_policy_attachment" "policy_attachment" {
   count = length(var.target_id) > 0 ? length(var.target_id) : 0
 
   policy_id = local.policy_id[0]
-  target_id = var.target_id[count.index]
+  target_id = tolist(var.target_id)[count.index]
 }
 

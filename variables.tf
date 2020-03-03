@@ -96,6 +96,7 @@ variable "policy_id" {
 }
 
 variable "target_id" {
+  type = any
   default = []
   description = "The unique identifier (ID) of the root, organizational unit, or account number that you want to attach the policy to"
 }
