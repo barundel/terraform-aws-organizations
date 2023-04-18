@@ -10,13 +10,13 @@
 
 ## Maintenance
 
-This project is maintained [Ben](https://github.com/barundel), anyone is welcome to contribute with fixes or new features. 
+This project is maintained [Ben](https://github.com/barundel), anyone is welcome to contribute with fixes or new features.
 
 ## Getting Started
 
 #### Organization Example
 
-The following example creates an organisation within your AWS account. 
+The following example creates an organisation within your AWS account.
 ````
 module "the_organization" {
   source = "github.com/barundel/terraform-aws-organizations"
@@ -39,7 +39,7 @@ module "the_organization" {
 
 #### Organization Example
 
-This example creates a tagging policy and assigns it to multiple targets. 
+This example creates a tagging policy and assigns it to multiple targets.
 ````
 module "tagging_rules_1" {
   source = "github.com/barundel/terraform-aws-organizations"
@@ -121,8 +121,11 @@ module "attach_policy" {
   target_id = module.org_3.ou_id
 }
 ````
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
 
-<!--- BEGIN_TF_DOCS --->
+No requirements.
+
 ## Providers
 
 | Name | Version |
@@ -132,11 +135,12 @@ module "attach_policy" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | account\_email | The email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account. | `string` | `""` | no |
 | account\_name | A friendly name for the member account. | `string` | `""` | no |
 | account\_parent\_id | Parent Organizational Unit ID or Root ID for the account. Defaults to the Organization default Root ID. A configuration must be present for this argument to perform drift detection. | `string` | `""` | no |
 | aws\_service\_access\_principles | List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must have feature\_set set to ALL. For additional information, see the [AWS Organizations User Guide.](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html). | `list(string)` | `[]` | no |
+| close\_on\_deletion | If true, a deletion event will close the account. Otherwise, it will only remove from the organization. This is not supported for GovCloud accounts | `bool` | `true` | no |
 | create\_organization | Tue or false on if to create an organization, defaults to false | `bool` | `false` | no |
 | enable\_policy\_types | List of Organizations policy types to enable in the Organization Root. Organization must have feature\_set set to ALL. For additional information about valid policy types (e.g. SERVICE\_CONTROL\_POLICY and TAG\_POLICY), see the [AWS Organizations API Reference.](https://docs.aws.amazon.com/organizations/latest/APIReference/API_EnablePolicyType.html) | `list(string)` | `[]` | no |
 | feature\_Set | Specify ALL (default) or CONSOLIDATED\_BILLING | `string` | `"ALL"` | no |
@@ -150,7 +154,7 @@ module "attach_policy" {
 | policy\_type | The type of policy to create. Currently, the only valid values are SERVICE\_CONTROL\_POLICY (SCP) and TAG\_POLICY. Defaults to SERVICE\_CONTROL\_POLICY | `string` | `"SERVICE_CONTROL_POLICY"` | no |
 | role\_name | The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the master account, allowing users in the master account to assume the role, as permitted by the master account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore\_changes is used. | `string` | `""` | no |
 | tags | Map of tags to assign to the reqsource. | `map(string)` | `{}` | no |
-| target\_id | The unique identifier (ID) of the root, organizational unit, or account number that you want to attach the policy to | `list` | `[]` | no |
+| target\_id | The unique identifier (ID) of the root, organizational unit, or account number that you want to attach the policy to | `any` | `[]` | no |
 
 ## Outputs
 
@@ -170,8 +174,8 @@ module "attach_policy" {
 | policy\_arn | ARN of the organization policy |
 | policy\_id | Identifier of the organization policy |
 | roots | List of organization roots |
-<!--- END_TF_DOCS --->
 
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
